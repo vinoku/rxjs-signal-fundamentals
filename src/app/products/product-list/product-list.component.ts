@@ -14,21 +14,16 @@ import {catchError, EMPTY, Observable, Subscription} from 'rxjs';
 })
 export class ProductListComponent {
   pageTitle = 'Products';
-  errorMessage = '';
 
   private productService = inject(ProductService);
 
   // Products
-  readonly products$: Observable<Product[]> = this.productService.products$.pipe(
-    catchError((err) => {
-      this.errorMessage = err;
-      return EMPTY;
-    }),
-  );
+  products = this.productService.products;
+  errorMessage = this.productService.productsError;
 
   // Selected product id to highlight the entry
-  selectedProductId: number = 0;
-  readonly selectedProductId$ = this.productService.productSelected$
+  // selectedProductId: number = 0;
+  selectedProductId = this.productService.selectedProductId
 
   onSelected(productId: number): void {
     this.productService.productSelected(productId);
